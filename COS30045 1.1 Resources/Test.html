@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="description"	content="Data Visualisation Exercise 1"/>
+	<meta name="keywords"		  content="HTML, CSS"/>
+	<meta name="author"			  content="Your name here"/>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+	<title>Task 1.1 HTML and CSS Demo Page</title>
+	<!--Insert description of exercise  -->
+
+	<style>
+		body{
+			margin-left: 10px;
+		}
+		h1 {
+			color: darkslateblue;
+		}
+		p{
+			font-size:  1.5em;
+			width: 60%;
+		}
+		ul{
+			font-size: 1.6em;
+		}
+		img{
+			width: 40%;
+		}
+		figcaption{
+			font-size: 1.2em;
+			font-style: italic;
+		}
+		footer{
+			background-color: antiquewhite;
+		}
+		button{
+			margin-bottom: 10px;
+		}
+	</style>
+
+</head>
+<body>
+
+	<h1>Title of Article about Interesting Visualisation</h1>
+	<h2>Pets and the Pandemic	</h2>
+
+	<p>A report from Animal Medicines Australia (AMA) has found that many Australians took the opportunity to introduce a pet into their household during the pandemic. Their survey indicated that there was a significant increase in the percent of households taking in a new dog, fish or bird. Their research also indicated that pets had a number of positive influences on their lives such as:
+	</p>
+
+	<ol>
+		<li>companionship</li>
+		<li>better mental health</li>
+		<li>joy and happiness.</li>
+	</ol>
+	<button id="btn-2019" type="button" class="btn btn-outline-primary">2019</button>
+    <button  id="btn-2021" type="button" class="btn btn-outline-secondary">2021</button>
+    <button  id="both" type="button" class="btn btn-outline-success">Both</button>
+	<figure>
+		<img id="Chart" src="pet_ownership_in_australia_table.png" alt="Table of Pet Ownership" >
+		<figcaption>Fig 1. Comparison of Pet Ownership in 2019 and 2021. Data source: <a href="https://animalmedicinesaustralia.org.au/wp-content/uploads/2021/08/AMAU005-PATP-Report21_v1.41_WEB.pdf">Animal Medicines Australia Report</a></figcaption>
+	  </figure>
+	<p>
+		With the increase in pet ownership the AMA are encouraging policy makers to consider the needs of companion animals and their owners when considering rental, strata and body corporate regulations are well as accepting animals in public places and transport.
+	</p>
+	<footer> 
+		<p>COS30045 Data Visualisation</p>
+		<p>Semeser 1 2022</p>
+	</footer>
+	<script>
+		function ChangeImage(id){
+			img = document.querySelector('#Chart');
+			img.src = `${id}.png`;
+		}
+		
+		
+		const btn2019 = document.querySelector("#btn-2019");
+		btn2019.onclick = function(){
+			ChangeImage(2019);
+		};
+		const btn2021 = document.querySelector("#btn-2021");
+		btn2021.onclick = function(){
+			ChangeImage(2021);
+		};
+		const btnboth = document.querySelector("#both");
+		btnboth.onclick = function(){
+			ChangeImage('both');
+		};
+	</script>
+	
+</body>
+</html>
