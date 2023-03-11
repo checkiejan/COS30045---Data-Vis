@@ -1,6 +1,6 @@
 function init(){
     var w = 520;
-    var h = 100;
+    var h = 120;
     var wombatSightings;
     var svg = d3.select("#chart")
                 .append("svg")
@@ -34,10 +34,30 @@ function init(){
                         return "lightblue";
                     }
                     else{
-                        return "darkslateblue";
+                        return "#97DEFF";
                     }
                     
             });
+            svg.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .text(function(d){
+                return d.wombats;
+            })
+            .attr("x",function(d,i){
+                if(d <10){
+                    return i*(w/data.length) + (w/data.length - padding)/2 -4;
+                }
+                return i*(w/data.length) + (w/data.length - padding)/2 -8;
+            })
+            .attr("y",function(d){
+                
+                if(d.wombats  > 5){
+                    return h - d.wombats*4 +15;
+                }
+                return h - d.wombats*4 -3;
+            })
     }
     
         d3.csv("wombats.csv").then(function(data){

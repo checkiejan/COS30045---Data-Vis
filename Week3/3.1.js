@@ -32,8 +32,8 @@ function init(){
    var svg = d3.select("#chart")
                 .append("svg")
                 .attr("width", w+30)
-                .attr("height", h+30);
-    
+                .attr("height", h+30)
+            
    
 
     svg.selectAll("circle")
