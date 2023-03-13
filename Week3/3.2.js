@@ -32,8 +32,8 @@ function init(){
 
     var svg = d3.select("#chart")
                 .append("svg")
-                .attr("width", w+padding)
-                .attr("height", h+padding);
+                .attr("width", w)
+                .attr("height", h);
                 //.append('g')
                 //.attr('transform','translate(20,50)');
 

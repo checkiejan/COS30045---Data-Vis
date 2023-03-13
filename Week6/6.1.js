@@ -22,20 +22,37 @@ function init(){
         .enter()
         .append("rect");
 
+
+    var createMouseEffect = function(){
+        svg.selectAll("rect")
+            .data(dataset)
+            .on("mouseover", function(event,d){
+                addTooltip(this,d);
+                })
+            .on("mouseout",function(){
+                
+                d3.select(this)
+                    .transition()
+                    .duration(300)
+                    .attr("fill","#9E4784")  
+                d3.select("#tooltip").remove();
+            });
+    }
+    createMouseEffect();
+
     var addTooltip= function(data,d){
         d3.select(data)
-            .attr("fill","#BE6DB7") 
             .transition()
-            .delay(500)
-            .duration(2000);
-            var xPosition = parseFloat(d3.select(data).attr("x"))+10;
-            var yPosition = parseFloat(d3.select(data).attr("y"));
-            if(d>=10){
-                yPosition = yPosition +15;
-            }
-            else{
-                yPosition = yPosition - 3;
-            }
+            .duration(350)
+            .attr("fill","#BE6DB7");
+        var xPosition = parseFloat(d3.select(data).attr("x"))+10;
+        var yPosition = parseFloat(d3.select(data).attr("y"));
+        if(d>10){
+            yPosition = yPosition +15;
+        }
+        else{
+            yPosition = yPosition - 3;
+        }
 
         svg.append("text")
             .attr("id","tooltip")
@@ -44,8 +61,8 @@ function init(){
             .text(d);
     }
     var updateBar = function(){
-        svg.selectAll("rect")
-            .data(dataset)
+            svg.selectAll("rect")
+                .data(dataset)
             .attr("x", function(d,i){
                 return xScale(i);
             })
@@ -56,32 +73,51 @@ function init(){
             .attr("height", function(d){
                 return yScale(d);
             })
-            .attr("fill","#9E4784")
-            .on("mouseover", function(event,d){
-                addTooltip(this,d);
-                })
-            .on("mouseout",function(){
-                d3.select(this)
-                    .attr("fill","#9E4784")  
-                d3.select("#tooltip").remove();
-            })
-            .transition()
-            .delay(10000)
-            .duration(2000);
+            .attr("fill","#9E4784");
+        createMouseEffect();
+        
     }
 
    
-    
 
     updateBar();        
                                 
                 
-    var drawChart = function(){
-        svg.selectAll("rect")
-                    .data(dataset)
-                    .enter()
-                    .append("rect");
-        updateBar();
+    var drawUpdate = function(){
+        var bars = svg.selectAll("rect")
+                    .data(dataset);
+        bars.enter()
+            .append("rect") 
+            .on("mouseover", function(event,d){
+                addTooltip(this,d);
+                })
+            .on("mouseout",function(){
+                
+                d3.select(this)
+                    .transition()
+                    .duration(500)
+                    .attr("fill","#9E4784")  
+                d3.select("#tooltip").remove();
+            })
+            .attr("x",w)
+            .attr("y",function(d){
+                return h - yScale(d);
+            })
+            .merge(bars)
+            .transition()
+            .duration(500)
+            .attr("x", function(d,i){
+                return xScale(i);
+            })
+            .attr("y", function(d){
+                return h - yScale(d);
+            })
+            .attr("width", xScale.bandwidth())
+            .attr("height", function(d){
+                return yScale(d);
+            })
+            .attr("fill","#9E4784");
+        //updateBar();
     }
     
     var addData= function(){
@@ -96,7 +132,7 @@ function init(){
     const btn = document.querySelector('.btn-add');
     btn.addEventListener("click",function(){
         addData();
-        drawChart();
+        drawUpdate();
     });
 
     d3.selectAll(".btn-remove")
@@ -111,7 +147,7 @@ function init(){
             .remove();
 
         xScale.domain(d3.range(dataset.length));
-        drawChart();
+        drawUpdate();
     })
 }
 window.onload = init;
