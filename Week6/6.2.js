@@ -1,68 +1,67 @@
 function init(){
-    var w = 500;
-    var h = 100;
+    var w = 500;//width of the svg
+    var h = 100; //height of the svg
     var maxValue = 40;
-    var choice = -1;
-    var dataset = [maxValue,5,26,23,9,3,7,19,12,10,4,7,1,8];
-    var xScale = d3.scaleBand()
-        .domain(d3.range(dataset.length))
+    var choice = -1; //choice of sorting, ascending or descending
+    var dataset = [maxValue,5,26,23,9,3,7,19,12,10,4,7,1,8]; //hardcode dataset
+    var xScale = d3.scaleBand() //xscale for the bar chart
+        .domain(d3.range(dataset.length))//domain is the number of elements in thedataset
         .rangeRound([0,w])
-        .paddingInner(0.05);
+        .paddingInner(0.05); //add padding
 
-    var yScale = d3.scaleLinear()
-            .domain([0,d3.max(dataset)])
-            .range([0,h]);
+    var yScale = d3.scaleLinear() // yscale for the bar chart
+                .domain([0,d3.max(dataset)]) //domain from 0 to the max value of the dataset
+                .range([0,h]);
 
-    var svg = d3.select("#chart")
+    var svg = d3.select("#chart") // add svg element to the #chart
             .append("svg")
             .attr("width", w)
             .attr("height", h);
     
-    svg.selectAll("rect")
+    svg.selectAll("rect") //create bars for the chart but not draw yet
         .data(dataset)
         .enter()
         .append("rect");
 
 
-    var createMouseEffect = function(){
+    var createMouseEffect = function(){ //function to create mouse effect
         svg.selectAll("rect")
             .data(dataset)
-            .on("mouseover", function(event,d){
-                addTooltip(this,d);
+            .on("mouseover", function(event,d){ //mouseover effect apply
+                addTooltip(this,d); //add the tooltip
                 })
-            .on("mouseout",function(){
+            .on("mouseout",function(){ //mouseout effect apply
                 
                 d3.select(this)
                     .transition()
                     .duration(300)
-                    .attr("fill","#9E4784")  
-                d3.select("#tooltip").remove();
+                    .attr("fill","#9E4784")  //change back to the old colour
+                d3.select("#tooltip").remove(); //remove the tooltip
             });
     }
 
-    createMouseEffect();
 
     var addTooltip= function(data,d){
         d3.select(data)
             .transition()
             .duration(350)
-            .attr("fill","#BE6DB7");
-        var xPosition = parseFloat(d3.select(data).attr("x"))+10;
+            .attr("fill","#BE6DB7"); //fill new colour for the bar
+        var xPosition = parseFloat(d3.select(data).attr("x"))+10; //get the xcoord for the text
         var yPosition = parseFloat(d3.select(data).attr("y"));
-        if(d>10){
+        if(d>10){ //if data is more than 10 then displayed in the bar
             yPosition = yPosition +15;
         }
         else{
-            yPosition = yPosition - 3;
+            yPosition = yPosition - 3; //displayed on top of the bar
         }
 
-        svg.append("text")
+        svg.append("text") //append the text tooltip
             .attr("id","tooltip")
             .attr("x",xPosition)
             .attr("y",yPosition)
             .text(d);
     }
-    var updateBar = function(){
+    var initialiseBar = function(){ //function to draw the bar chart 
             svg.selectAll("rect")
                 .data(dataset)
             .attr("x", function(d,i){
@@ -76,18 +75,19 @@ function init(){
                 return yScale(d);
             })
             .attr("fill","#9E4784");
-        createMouseEffect();
+        createMouseEffect(); //create mouse effect for each bar
         
     }
 
-    updateBar();        
+    initialiseBar();        
                 
-   var drawUpdate = function(){
+   var drawUpdate = function(){ //function to redraw the bar whenever the data is updated
         var bars = svg.selectAll("rect")
                     .data(dataset);
         bars.enter()
             .append("rect") 
-            .on("mouseover", function(event,d){
+            .on("mouseover", function(event,d){ //create mouse effect for each bar
+                addTooltip(this,d);
                 addTooltip(this,d);
                 })
             .on("mouseout",function(){
@@ -116,38 +116,37 @@ function init(){
                 return yScale(d);
             })
             .attr("fill","#9E4784");
-        //updateBar();
     }
     
-    var addData= function(){
+    var addData= function(){ //function to add new data to the dataset
        var newNumber = Math.floor(Math.random()*maxValue);
-       while(newNumber == 0){
+       while(newNumber == 0){ //make srue the new value is not 0
         newNumber = Math.floor(Math.random()*maxValue);
        }
        dataset.push(newNumber);
-       xScale.domain(d3.range(dataset.length));
+       xScale.domain(d3.range(dataset.length)); //rescale the xscale
     }
 
     var sortBars = function(){
-        if(choice == 1)
+        if(choice == 1) //ascending order
         {
             svg.selectAll("rect")
                 .sort(function(a,b){
                     return d3.ascending(a,b);
                 })
-                .transition()
+                .transition() //tranistion when sorting
                 .delay(300)
                 .duration(400)
                 .attr("x",function(d,i){
                     return xScale(i);
                 });
         }
-        else{
+        else{ //descending order
             svg.selectAll("rect")
                 .sort(function(a,b){
                     return d3.descending(a,b);
                 })
-                .transition()
+                .transition() //tranistion when sorting
                 .duration(500)
                 .ease(d3.easeCircleIn)
                 .attr("x",function(d,i){
@@ -158,28 +157,28 @@ function init(){
 
 
     const btn = document.querySelector('.btn-add');
-    btn.addEventListener("click",function(){
+    btn.addEventListener("click",function(){  //when the add button is clicked
         addData();
         drawUpdate();
     });
 
     d3.select(".btn-remove")
-        .on("click",function(){
+        .on("click",function(){ //when the remove button is clicked
             dataset.shift();
             var bars = svg.selectAll("rect")
                         .data(dataset);
-            bars.exit()
-                .transition()
+            bars.exit() //remove the needed element
+                .transition() //add transition to removing bars
                 .duration(500)
                 .attr("x",w)
                 .remove();
 
             xScale.domain(d3.range(dataset.length));
-            drawUpdate();
+            drawUpdate();  //redraw the chart
         })
     d3.select(".btn-sort")
-        .on("click",function(){
-            choice = choice * -1;
+        .on("click",function(){ //when the sort button is clicked
+            choice = choice * -1; //toggle the choice
             sortBars();
         })
 }

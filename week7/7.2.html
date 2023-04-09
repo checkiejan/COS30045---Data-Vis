@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"	content="Data Visualisation Exercise 1"/>
+	<meta name="keywords"		  content="HTML, CSS, D3 JS"/>
+	<meta name="author"			  content="Gia Hung Tran"/>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="7.2.js"></script>
+    <title>7.2 Pie Chart</title>
+    <style>
+    body{
+        background-color: #CBE4DE;
+        min-height: 95vh;
+        display: flex;
+        flex-direction: column;
+    }
+    h1 {
+        color: darkslateblue;
+        text-align: center;
+    }
+    h2 {
+        font-weight: 100;
+        text-align: center;
+    }
+    div{
+        text-align: center;
+        display: block;
+        margin: 20px;
+    }
+    footer{
+        font-size: 1em;
+        margin: 10px;
+        margin-top: auto;
+        text-align: right;
+    }
+   #chart{
+    background-color: #CBE4DE;
+   }
+    .line{
+        fill: none;
+        stroke: rgb(231, 19, 72);
+        stroke-width: 0.8;
+        stroke-dasharray: 5;
+    }
+    .clicked{
+        background-color: #FFFBEB;
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    }
+    button{
+        padding: 5px;
+        margin-bottom: 10px;
+        align-items: center;
+        background-color: #FFFFFF;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: .25rem;
+        box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+        box-sizing: border-box;
+        color: rgba(0, 0, 0, 0.85);
+        font-size: 16px;
+        font-weight: 600;
+        justify-content: center;
+        line-height: 1.25;
+        margin: 0;
+        min-height: 3rem;
+        width: 120px;
+        position: relative;
+        text-decoration: none;
+        transition: all 250ms;
+    }
+    button:hover,button:focus {
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        color: rgba(0, 0, 0, 0.65);
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+    }
+    button:active {
+        background-color: #F0F0F1;
+        border-color: rgba(0, 0, 0, 0.15);
+        box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+        color: rgba(0, 0, 0, 0.65);
+        transform: translateY(0);
+    }
+    .button{
+        display: block;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <h1>Pie Chart</h1>
+    <div id="chart"></div>
+    <footer>COS30045 Data Visualisation <br>Gia Hung Tran</footer>
+</body>
+</html>

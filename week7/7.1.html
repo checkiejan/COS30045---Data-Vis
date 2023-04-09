@@ -9,7 +9,7 @@
 	<meta name="author"			  content="Gia Hung Tran"/>
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="7.1.js"></script>
-    <title>7.1 Transition</title>
+    <title>7.1 Line and Area Chart</title>
     <style>
     body{
         background-color: #CBE4DE;
@@ -41,8 +41,9 @@
    }
     .line{
         fill: none;
-        stroke: rgb(12, 21, 24);
-        stroke-width: 0.5;
+        stroke: rgb(231, 19, 72);
+        stroke-width: 0.8;
+        stroke-dasharray: 5;
     }
     .clicked{
         background-color: #FFFBEB;
@@ -93,10 +94,6 @@
 </head>
 <body>
     <h1>Number of Unemployed in Australia</h1>
-    <div>
-        <button class ="btn-add">Add</button>
-        <button class ="btn-remove">Remove</button>
-    </div>
     <div id="chart"></div>
     <footer>COS30045 Data Visualisation <br>Gia Hung Tran</footer>
 </body>

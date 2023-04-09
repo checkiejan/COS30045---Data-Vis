@@ -25,15 +25,19 @@ function init(){
                         .attr("width", w + 100)
                         .attr("height", h +padding);
 
-        svg.append("path")
-            .datum(dataset)
-            .attr("class", "line")
-            .attr("d", line);
+        area = d3.area()
+            .x(function(d) {  return xScale(d.date) + padding; })
+            .y0( function() {return yScale.range()[0]; })
+            .y1(function(d) {return yScale(d.number); });
+
+       
         
         var xAxis = d3.axisBottom().ticks(8).scale(xScale);
 
 
         var yAxis = d3.axisLeft().ticks(8).scale(yScale);
+
+        
 
         svg.append("g")
         // .attr("transform",`translate(0,${h-padding})`)
@@ -44,27 +48,28 @@ function init(){
             .attr("transform",`translate(${padding},0)`)
             .call(yAxis);
 
+       
+        
+
+        svg.append("path")
+            .datum(dataset)
+            .attr("class", "area")
+            .attr("d", area)
+            .attr("fill","#C8B6A6");
+        
         svg.append("line")
             .attr("class","line halfMilMark")
             .attr("x1",padding)
             .attr("y1", yScale(500000))
             .attr("x2",w + padding)
-            .attr("y2", yScale(500000))
+            .attr("y2", yScale(500000));
 
         svg.append("text")
             .attr("class", "halfMilMark")
             .attr("x", padding +10)
             .attr("y", yScale(500000) - 7)
-            .text("Half a million unemployed");
-
-            
-        area = d3.area()
-                .x(function(d) {return xScale(d.date); })
-                
-                .y0( function() {return yScale.range()[0]; })
-                .y1(function(d) {return yScale(d.number); });
-
-        
+            .text("Half a million unemployed")
+            .attr("fill","red");
         
     }
 

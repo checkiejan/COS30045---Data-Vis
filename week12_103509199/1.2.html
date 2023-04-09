@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="description"	content="Data Visualisation Exercise 1"/>
+	<meta name="keywords"		  content="HTML, CSS, JS"/>
+	<meta name="author"			  content="Gia Hung Tran"/>
+	<title>Task 1.2 JS Demo Page</title>
+	<!--Insert description of exercise  -->
+	<!-- This excercise is to review the basic HTML, CSS, and JS  -->
+	<!-- This page does not include external CSS and JS file -->
+	<style>
+		body{
+			background-color: #CBE4DE;  /* set the background to this color */
+		}
+		h1 {
+			color: darkslateblue; /* color for the text */
+			text-align: center;    /* push to the middle */
+		}
+		h2 {
+			font-weight: 100; /* set font weight */
+			text-align: center;
+		}
+		div{
+			text-align: center; /* all elements inside pushed to the middle */
+			display: block;
+		}
+		p{	
+			font-size:  1.5em;
+			margin-left:5%;
+			margin-right: 5%;			
+		}
+		ol{
+			list-style-position: inside;  /* to push the list to the middle */
+		}
+		ul{
+			font-size: 1.6em;
+		}
+		img{
+			width: 50%;
+		}
+		figure{
+			text-align: center;
+		}
+		figcaption{
+			text-align: center; /* all elements inside pushed to the middle */
+			margin: 3px auto;
+			width: 40%;
+			font-size: 1.2em;
+			font-style: italic;
+		}
+		footer{
+			font-size: 1em;
+			padding: 2px;
+			text-align: right;
+		}
+		button{ /* solution for the style of the button is inspired by this website: https://getcssscan.com/css-buttons-examples */
+			margin-bottom: 10px; /* set the bottom margin to 10px */
+			align-items: center; /* pushed to the middle */
+			background-color: #FFFFFF;
+			border: 1px solid rgba(0, 0, 0, 0.1); /* draw the border with the width of 1px solid style and that color */
+			border-radius: .25rem;  /* made the corner round */
+			box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0; /* make shadow for the box */
+			box-sizing: border-box;
+			color: rgba(0, 0, 0, 0.85);
+			font-size: 16px;
+			font-weight: 600;
+			justify-content: center;
+			line-height: 1.25;
+			margin: 0;
+			min-height: 3rem;
+			width: 70px;
+			position: relative;
+			text-decoration: none;
+			transition: all 250ms;
+		}
+		button:hover,button:focus {
+			border-color: rgba(0, 0, 0, 0.15);
+			box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+			color: rgba(0, 0, 0, 0.65);
+		}
+
+		button:hover {
+			transform: translateY(-1px);
+		}
+		.clicked{
+			background-color: #FFFBEB;
+		}
+		button:active {
+			background-color: #F0F0F1;
+			border-color: rgba(0, 0, 0, 0.15);
+			box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+			color: rgba(0, 0, 0, 0.65);
+			transform: translateY(0);
+		}
+		.button{
+			display: block;
+			text-align: center;
+		}
+	</style>
+
+</head>
+<body>
+
+	<h1>Title of Article about Interesting Visualisation</h1>
+	<h2>Pets and the Pandemic	</h2>
+
+	<p>A report from <b>Animal Medicines Australia (<i>AMA</i>)</b> has found that many Australians took the opportunity to introduce a pet into their household during the pandemic. Their survey indicated that there was a significant increase in the percent of households taking in a new dog, fish or bird. Their research also indicated that pets had a number of positive influences on their lives such as:
+	</p>
+	<div>
+	<ol>
+		<li>companionship</li>
+		<li>better mental health</li>
+		<li>joy and happiness.</li>
+	</ol> </div>
+	<p class="button">
+	<button class="clicked" id="btn-2019" type="button" >2019</button>
+    <button  id="btn-2021" type="button">2021</button>
+    <button  id="both" type="button" >Both</button>
+	</p>
+	<figure>
+		<img id="Chart" src="2019.png" alt="chart of Pet Ownership in 2019" >
+		<figcaption>Fig 1.Pet Ownership in 2019.</figcaption>
+	<p>
+		With the increase in pet ownership the AMA are encouraging policy makers to consider the needs of companion animals and their owners when considering rental, strata and body corporate regulations are well as accepting animals in public places and transport.
+	</p>
+	<footer> 
+		<p>COS30045 Data Visualisation <br>
+		Semeser 1 2022</p>
+	</footer>
+	<script>
+		
+		function ChangeImage(id, text){ // function to change image
+			img = document.querySelector('#Chart'); //get the image
+			img.src = `${id}.png`; //change the source of image
+			img.alt = text;
+		}
+		function ChangeCaption(prompt){ //function to change caption
+			figcaption = document.querySelector('figcaption');
+			figcaption.innerText = prompt;
+		}
+		
+		function ChangeActive(id){ //function to change the class of button when it is clicked
+			buttons = document.querySelectorAll('button'); //only one button at a time is clicked
+			for(let i =0; i < buttons.length; i++){
+				if(i ==id){
+					buttons[i].classList.add('clicked');
+				}
+				else{
+					buttons[i].classList.remove('clicked');
+				}
+			}
+		}
+		
+		const btn2019 = document.querySelector("#btn-2019"); //get button for 2019
+		btn2019.onclick = function(){
+			ChangeImage(2019,"chart of Pet Ownership in 2019");
+			ChangeCaption('Fig 1.Pet Ownership in 2019.');
+			ChangeActive(0);
+		};
+		const btn2021 = document.querySelector("#btn-2021"); //get button for 2021
+		btn2021.onclick = function(){
+			ChangeImage(2021,"chart of Pet Ownership in 2021");
+			ChangeCaption('Fig 1.Pet Ownership in 2021.');
+			ChangeActive(1);
+		};
+		const btnboth = document.querySelector("#both"); //get button for both year
+		btnboth.onclick = function(){
+			ChangeImage('both','Chart comparison of Pet Ownership in 2019 and 2021.');
+			ChangeCaption('Comparison of Pet Ownership in 2019 and 2021.');
+			ChangeActive(2);
+		};
+	</script>
+	
+</body>
+</html>
