@@ -45,7 +45,8 @@ function init(){
             .transition()
             .duration(350)
             .attr("fill","#BE6DB7"); //fill new colour for the bar
-        var xPosition = parseFloat(d3.select(data).attr("x"))+10; //get the xcoord for the text
+        
+        var xPosition = parseFloat(d3.select(data).attr("x")) + parseFloat(d3.select(data).attr("width"))/2 - 6; //get the xcoord for the text
         var yPosition = parseFloat(d3.select(data).attr("y"));
         if(d>10){ //if data is more than 10 then displayed in the bar
             yPosition = yPosition +15;

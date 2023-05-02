@@ -116,6 +116,7 @@ function init(){
                 return yScale(d);
             })
             .attr("fill","#9E4784");
+        createMouseEffect();
     }
     
     var addData= function(){ //function to add new data to the dataset

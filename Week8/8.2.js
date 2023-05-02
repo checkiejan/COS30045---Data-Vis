@@ -14,16 +14,17 @@ function init(){
                 .attr("width",w)
                 .attr("height",h)
                 .attr("fill","black");
-    var colour = d3.scaleQuantize()
+
+    var colour = d3.scaleQuantize() //colour scheme
     //.range(["rgb(237,248,233)", "rgb(186,228,179)", "rgb(116,196,118)", "rgb(49,163,84)", "rgb(0,109,44)"]);
     .range(["#feebe2","#fbb4b9","#f768a1","#c51b8a","#7a0177"])
 
     
-    d3.csv("VIC_LGA_unemployment.csv").then(function(data){  
+    d3.csv("VIC_LGA_unemployment.csv").then(function(data){   //read data from csv file
         colour.domain([d3.min(data, function(d){return d.unemployed}),d3.max(data, function(d){return d.unemployed})])
        
 
-        d3.json("LGA_VIC.json").then(function(json){
+        d3.json("LGA_VIC.json").then(function(json){ //read map data from json file to combine it with csv file
            
         for(var i =0; i <data.length; i++)
         {
@@ -32,22 +33,23 @@ function init(){
             for(var j =0; j < json.features.length; j++)
             {
                 var jsonLoc = json.features[j].properties.LGA_name;
-                if(dataLoc == jsonLoc)
+                if(dataLoc == jsonLoc) // if location matches the json
                 {
-                    json.features[j].properties.value = dataValue;
+                    console.log(dataLoc)
+                    json.features[j].properties.value = dataValue; //append value into json based on the location
                     break;
                 }
             }
         }
 
-        svg.selectAll("path")
+        svg.selectAll("path") // draw the map
             .data(json.features)
             .enter()
             .append("path")
             .attr("d", path)
             .style("fill", function(d){
                 var value = d.properties.value;
-                if(value)
+                if(value) // if the data is not null then colour it
                 {
                     return colour(value);
                 }
@@ -55,8 +57,8 @@ function init(){
                     return "#210062";
                 }
             })
-            d3.csv("VIC_city.csv").then(function(data){
-           
+            d3.csv("VIC_city.csv").then(function(data){ //draw the yellow dots based on the this file
+                //this file contains the coordinates
                 svg.selectAll("circle")
                     .data(data)
                     .enter()
