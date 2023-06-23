@@ -49,12 +49,11 @@ function init(){
             .call(yAxis);
 
        
-        
 
         svg.append("path")
             .datum(dataset)
-            .attr("class", "area")
-            .attr("d", area)
+            .attr("class", "line")
+            .attr("d", line)
             .attr("fill","#C8B6A6");
         
         svg.append("line") // line element

@@ -78,12 +78,27 @@ function init(){
                     .text( function (d) {
                         return d.place ; 
                     });
-            })
+
+                    var text = svg.selectAll("text")
+                        .data(data);
+
+                    text.enter() //update the text
+                        .append("text")
+                        .attr("x",function(d){
+                            return projection([d.lon,d.lat])[0];
+                        })
+                        .attr("y",function(d){
+                            return projection([d.lon, d.lat])[1] ;
+                        })
+                        .text(function(d){
+                            return d.place;
+                        });
 
         })
         
     })
     
    
+})
 }
 window.onload = init;
